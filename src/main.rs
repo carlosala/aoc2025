@@ -72,18 +72,28 @@ async fn download(selected_day: usize) -> Result<(), Box<dyn std::error::Error>>
 
     std::fs::write(format!("inputs/{:02}", selected_day), body)?;
 
-    copy_template(selected_day)?;
-
-    append_day(selected_day)?;
+    if copy_template(selected_day)? {
+        append_day(selected_day)?;
+    }
 
     Ok(())
 }
 
-fn copy_template(selected_day: usize) -> Result<u64, std::io::Error> {
-    std::fs::copy(
+fn copy_template(selected_day: usize) -> Result<bool, std::io::Error> {
+    if std::fs::exists(format!("src/solutions/day{:02}.rs", selected_day)).unwrap() {
+        println!(
+            "PATH src/solutions/day{:02}.rs already exists",
+            selected_day
+        );
+        return Ok(false);
+    }
+    match std::fs::copy(
         "src/solutions/template.rs",
         format!("src/solutions/day{:02}.rs", selected_day),
-    )
+    ) {
+        Ok(_) => return Ok(true),
+        Err(e) => return Err(e),
+    }
 }
 
 fn append_day(selected_day: usize) -> Result<(), std::io::Error> {
