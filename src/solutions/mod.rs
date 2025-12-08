@@ -4,6 +4,7 @@ mod day03;
 mod day04;
 mod day05;
 mod day06;
+mod day07;
 mod solver;
 
 pub use solver::Solver;
@@ -18,6 +19,7 @@ pub fn solve(day: usize, parts: usize, test: bool) {
         4 => day04::Problem.solve(filename, parts),
         5 => day05::Problem.solve(filename, parts),
         6 => day06::Problem.solve(filename, parts),
+        7 => day07::Problem.solve(filename, parts),
         _ => panic!("day not implemented"),
     }
 }
