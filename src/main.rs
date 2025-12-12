@@ -91,8 +91,8 @@ fn copy_template(selected_day: usize) -> Result<bool, std::io::Error> {
         "src/solutions/template.rs",
         format!("src/solutions/day{:02}.rs", selected_day),
     ) {
-        Ok(_) => return Ok(true),
-        Err(e) => return Err(e),
+        Ok(_) => Ok(true),
+        Err(e) => Err(e),
     }
 }
 
